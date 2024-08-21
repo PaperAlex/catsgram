@@ -30,12 +30,15 @@ public class PostService {
 //        return posts.values();
 //    }
 
-    public Collection<Post> findAll (Integer size, Integer from, String sort) {
+    public Collection<Post> findAll(Integer size, Integer from, SortOrder sort) {
         return posts.values()
                 .stream()
                 .sorted((p0, p1) -> {
-                    int comp = p0.getPostDate().compareTo(p1.getPostDate()); //прямой порядок сортировки
-                    if (sort.equals("desc")) {
+                    int comp = 1;
+                    if (sort.equals(SortOrder.ASCENDING)) {
+                        comp = p0.getPostDate().compareTo(p1.getPostDate());
+                    } //прямой порядок сортировки
+                    if (sort.equals(SortOrder.DESCENDING)) {
                         comp = -1 * comp; //обратный порядок сортировки
                     }
                     return comp;
@@ -86,7 +89,7 @@ public class PostService {
                 .stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst();
-        if(op.isEmpty()) {
+        if (op.isEmpty()) {
             throw new ConditionsNotMetException("Автор с id = " + id + " не найден");
         }
         return op.get();
