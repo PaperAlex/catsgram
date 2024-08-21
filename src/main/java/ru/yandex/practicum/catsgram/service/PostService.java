@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 // Указываем, что класс PostService - является бином и его
 // нужно добавить в контекст приложения
@@ -34,7 +35,7 @@ public class PostService {
         }
 
         Long authorId = post.getAuthorId();
-        if (userService.findUserById(authorId).isEmpty()) {
+        if (userService.findAuthorById(authorId).isEmpty()) {
             throw new ConditionsNotMetException("Автор с id = " + authorId + " не найден");
         }
         post.setId(getNextId());
@@ -66,4 +67,16 @@ public class PostService {
                 .orElse(0);
         return ++currentMaxId;
     }
+
+    public Post findPostById(Long id) {
+        Optional<Post> op = posts.values()
+                .stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst();
+        if(op.isEmpty()) {
+            throw new ConditionsNotMetException("Автор с id = " + id + " не найден");
+        }
+        return op.get();
+    }
+
 }

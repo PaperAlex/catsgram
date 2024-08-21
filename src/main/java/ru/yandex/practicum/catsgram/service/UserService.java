@@ -57,7 +57,7 @@ public class UserService {
 
 
     private boolean checkDuplicatedEmail(User user) {
-       return users.values().stream().anyMatch(list -> list.getEmail().equals(user.getEmail()));
+        return users.values().stream().anyMatch(list -> list.getEmail().equals(user.getEmail()));
     }
 
     // вспомогательный метод для генерации идентификатора нового поста
@@ -70,8 +70,18 @@ public class UserService {
         return ++currentMaxId;
     }
 
-    public Optional<User> findUserById(Long id) {
-    //Integer userId = Integer.valueOf(id);
-        return Optional.ofNullable(users.get(id));
+    public User findUserById(Long id) {
+        Optional<User> op = users.values()
+                .stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst();
+        if(op.isEmpty()) {
+            throw new ConditionsNotMetException("Id " + id +" не в списке");
+        }
+        return op.get();
+    }
+
+    public Optional<User> findAuthorById (Long authorId) {
+        return Optional.ofNullable(users.get(authorId));
     }
 }
