@@ -1,12 +1,12 @@
 package ru.yandex.practicum.catsgram.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody User user) {
-        // проверяем выполнение необходимых условий
         return userService.create(user);
     }
 
@@ -36,7 +36,6 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    @ResponseBody
     public User findUserById(@PathVariable Long userId) {
         return userService.findUserById(userId);
     }

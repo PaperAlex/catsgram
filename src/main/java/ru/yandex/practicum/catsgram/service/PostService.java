@@ -84,15 +84,10 @@ public class PostService {
         return ++currentMaxId;
     }
 
-    public Post findPostById(Long id) {
-        Optional<Post> op = posts.values()
+    public Optional<Post> findPostById(Long id) {
+        return Optional.ofNullable(posts.values()
                 .stream()
                 .filter(x -> x.getId().equals(id))
-                .findFirst();
-        if (op.isEmpty()) {
-            throw new ConditionsNotMetException("Автор с id = " + id + " не найден");
-        }
-        return op.get();
+                .findFirst().orElseThrow(() -> new ConditionsNotMetException("Автор с id = " + id + " не найден")));
     }
-
 }
