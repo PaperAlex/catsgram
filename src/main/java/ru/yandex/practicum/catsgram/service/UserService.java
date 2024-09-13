@@ -75,13 +75,13 @@ public class UserService {
                 .stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst();
-        if(op.isEmpty()) {
-            throw new ConditionsNotMetException("Id " + id +" не в списке");
+        if (op.isEmpty()) {
+            throw new ConditionsNotMetException("Id " + id + " не в списке");
         }
         return op.get();
     }
 
-    public Optional<User> findAuthorById (Long authorId) {
+    public Optional<User> findAuthorById(Long authorId) {
         return Optional.ofNullable(users.get(authorId));
     }
 }
