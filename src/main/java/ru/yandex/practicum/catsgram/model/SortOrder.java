@@ -1,4 +1,4 @@
-package ru.yandex.practicum.catsgram.service;
+package ru.yandex.practicum.catsgram.model;
 
 public enum SortOrder  {
     ASCENDING, DESCENDING;
