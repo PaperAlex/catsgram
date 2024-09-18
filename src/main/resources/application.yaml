@@ -7,3 +7,5 @@ spring:
 
 catsgram:
   image-directory: "images"
+
+
